@@ -1,0 +1,20 @@
+{
+    "name": "survey-manager",
+    "description": "Survey Manager Backend",
+    "repository": "https://github.com/TheEny53/SurveyToolPublic",
+    "keywords": ["python", "django", "survey", "crm"],
+    "env": {
+      "DJANGO_SECRET_KEY": {
+        "description": "A randomly generated secret to secure your Django installation",
+        "generator": "secret"
+      }
+    },
+    "addons": [
+      "heroku-redis:hobby-dev",
+      "heroku-postgresql:hobby-dev",
+      "papertrail:choklad"
+    ],
+    "scripts": {
+      "postdeploy": "bash ./release-tasks.sh"
+    }
+  }

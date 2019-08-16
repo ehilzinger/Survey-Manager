@@ -1,0 +1,13 @@
+django
+djangorestframework
+djangorestframework_simplejwt
+gunicorn
+django_heroku
+django-cors-headers
+coreapi
+django-extensions
+django-rest-swagger==2.1.2
+rq
+redis
+django-rq
+textblob
