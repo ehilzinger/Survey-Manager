@@ -2,4 +2,5 @@
 Models for the survey application.
 """
 
-from .models import *
+from .base_models import *
+from .org_models import *
