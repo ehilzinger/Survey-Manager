@@ -2,4 +2,4 @@
 Views for the survey application.
 """
 
-from .views import *
+from .admin_views import *
