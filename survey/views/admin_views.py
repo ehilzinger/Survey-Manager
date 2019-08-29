@@ -6,7 +6,9 @@ from rest_framework.views import status
 from rest_framework.response import Response
 
 from ..serializers import UserSerializer
+import logging
 
+logger = logging.getLogger(__name__)
 
 class GetUserDetailView(generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
@@ -19,7 +21,7 @@ class RegisterUserView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
     def post(self, request, *args, **kwargs):
-        self.stdout.write('Created User')
+        logger.info('Created User')
         User.objects.create_user(
             username=request.data['username'], password=request.data['password'], email=request.data['email'])
         return Response(data={'message': 'Created User'}, status=status.HTTP_201_CREATED)
