@@ -35,4 +35,4 @@ class RegisterUserView(generics.ListCreateAPIView):
             transaction.rollback()
             if('UNIQUE constraint failed' in e.args):
                 return Response(data={'message': 'Username is already taken'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            #return Response(data={'message': 'Username is already taken'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(data=e.args, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
