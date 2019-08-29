@@ -19,7 +19,7 @@ class RegisterUserView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
     def post(self, request, *args, **kwargs):
-        print("Reached Endpoint")
+        self.stdout.write('Created User')
         User.objects.create_user(
             username=request.data['username'], password=request.data['password'], email=request.data['email'])
         return Response(data={'message': 'Created User'}, status=status.HTTP_201_CREATED)
