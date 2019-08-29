@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
-from .views import (GetUserDetailView)
+from .views import (GetUserDetailView, RegisterUserView)
 
 AUTH_PATTERNS = [
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token-obtain'),
@@ -9,5 +9,6 @@ AUTH_PATTERNS = [
 ]
 
 urlpatterns = [
-    path('auth/', include(AUTH_PATTERNS))
+    path('auth/', include(AUTH_PATTERNS)),
+    path('register/', RegisterUserView.as_view(), name='register-user')
 ]
