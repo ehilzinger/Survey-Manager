@@ -1,19 +1,23 @@
-from django.shortcuts import render
-
+from datetime import timedelta
 from django.contrib.auth.models import User
 from rest_framework import exceptions, permissions, generics
 from rest_framework.views import status
 from rest_framework.response import Response
+from decouple import config
 
 from ..serializers import UserSerializer
 import logging
 
 logger = logging.getLogger(__name__)
+refresh_token_lifetime = timedelta(days=config('REFRESH_TOKEN_LIFETIME', default=1, cast=int))
 
 class GetUserDetailView(generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         return Response(data={'username': request.user.username}, status=status.HTTP_200_OK)
 
+class GetRefreshTokenLifetimeView(generics.RetrieveAPIView):
+    def get(self, request, *args, **kwargs):
+        return Response(data={'refresh_token_lifetime': refresh_token_lifetime}, status=status.HTTP_200_OK)
 
 class RegisterUserView(generics.ListCreateAPIView):
     permission_classes = (permissions.AllowAny,)
