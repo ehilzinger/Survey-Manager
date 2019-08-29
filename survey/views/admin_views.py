@@ -1,5 +1,6 @@
 from datetime import timedelta
 from django.contrib.auth.models import User
+from django.db import IntegrityError, transaction
 from rest_framework import exceptions, permissions, generics
 from rest_framework.views import status
 from rest_framework.response import Response
@@ -25,7 +26,12 @@ class RegisterUserView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
     def post(self, request, *args, **kwargs):
-        logger.info('Created User')
-        User.objects.create_user(
-            username=request.data['username'], password=request.data['password'], email=request.data['email'])
-        return Response(data={'message': 'Created User'}, status=status.HTTP_201_CREATED)
+        try:
+            logger.info('Created User')
+            User.objects.create_user(
+                username=request.data['username'], password=request.data['password'], email=request.data['email'])
+            return Response(data={'message': 'Created User'}, status=status.HTTP_201_CREATED)
+        except IntegrityError as e:
+            transaction.rollback()
+            if('UNIQUE constraint failed: auth_user.username' in e.args):
+                return Response(data={'message': 'Username is already taken'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
