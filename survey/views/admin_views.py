@@ -33,6 +33,6 @@ class RegisterUserView(generics.ListCreateAPIView):
             return Response(data={'message': 'Created User'}, status=status.HTTP_201_CREATED)
         except IntegrityError as e:
             transaction.rollback()
-            if('UNIQUE constraint failed' in e.args):
+            if('unique constraint' in e.args[0].lower()):
                 return Response(data={'message': 'Username is already taken'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(data=e.args, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
