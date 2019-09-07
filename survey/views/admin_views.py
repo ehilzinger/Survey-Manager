@@ -46,4 +46,4 @@ class UpdateUserView(generics.UpdateAPIView):
         if email is not None or not '':
             user.email = email
         user.save()
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK, data={'message': 'Update Succeeded'})
