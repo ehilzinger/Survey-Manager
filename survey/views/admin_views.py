@@ -27,12 +27,23 @@ class RegisterUserView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            logger.info('Created User')
             User.objects.create_user(
                 username=request.data['username'], password=request.data['password'], email=request.data['email'])
+            logger.info('Created User')
             return Response(data={'message': 'Created User'}, status=status.HTTP_201_CREATED)
         except IntegrityError as e:
             transaction.rollback()
             if('unique constraint' in e.args[0].lower()):
                 return Response(data={'message': 'Username is already taken'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response(data=e.args, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class UpdateUserView(generics.UpdateAPIView):
+    def put(self, request, *args, **kwargs):
+        if(request.user is None):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        email = request.data['email']
+        user = request.user
+        if email is not None or not '':
+            user.email = email
+        user.save()
+        return Response(status=status.HTTP_200_OK)

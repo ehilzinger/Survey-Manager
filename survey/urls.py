@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
-from .views import (GetUserDetailView, RegisterUserView, GetRefreshTokenLifetimeView, OrganizationView, SurveyBaseView)
+from .views import (GetUserDetailView, RegisterUserView, GetRefreshTokenLifetimeView, OrganizationView, SurveyBaseView, UpdateUserView)
 
 AUTH_PATTERNS = [
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token-obtain'),
@@ -21,5 +21,6 @@ urlpatterns = [
     path('auth/', include(AUTH_PATTERNS)),
     path('org/', include(ORG_PATTERNS)),
     path('survey/', include(SURVEY_PATTERNS)),
-    path('register/', RegisterUserView.as_view(), name='register-user')
+    path('register/', RegisterUserView.as_view(), name='register-user'),
+    path('user/', UpdateUserView.as_view(), name='update-user')
 ]
