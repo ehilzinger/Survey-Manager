@@ -43,7 +43,7 @@ class UpdateUserView(generics.UpdateAPIView):
             return Response(status=status.HTTP_403_FORBIDDEN)
         email = request.data['email']
         user = request.user
-        if email is not None or not '':
+        if email is not None or '':
             user.email = email
         user.save()
         return Response(status=status.HTTP_200_OK, data={'message': 'Update Succeeded'})
