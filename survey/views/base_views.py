@@ -19,3 +19,4 @@ class SurveyBaseView(APIView):
         except IntegrityError as e:
             transaction.rollback()
             return Response(data=e.args, status=status.HTTP_400_BAD_REQUEST)
+
