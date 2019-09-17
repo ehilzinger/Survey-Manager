@@ -22,7 +22,6 @@ class SurveyBase(models.Model):
     survey_approval_required = models.BooleanField()
     survey_due_date = models.DateField()
     survey_creation_date = models.DateField(default=datetime.date.today)
-    survey_responsible_users = models.ManyToManyField(to=Profile, related_name='responsible_users')
     survey_archived = models.BooleanField(default=False)
 
     class Meta:

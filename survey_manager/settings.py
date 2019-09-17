@@ -115,7 +115,13 @@ REST_FRAMEWORK = {
     # Disables Browsable API
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-    )
+    ),
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'survey_create': '1000/day',
+    }
 }
 
 refresh_token_lifetime = timedelta(days=config('REFRESH_TOKEN_LIFETIME', default=1, cast=int))
